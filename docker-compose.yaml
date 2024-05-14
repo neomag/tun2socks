@@ -1,0 +1,16 @@
+services:
+  sidecar:
+    image: sidecar:v0.2
+    build: ./sidecar
+    cap_add:
+      - NET_ADMIN
+    devices:
+      - /dev/net/tun:/dev/net/tun
+    environment:
+      - VPN_USER=bF1fYJnzOr
+      - VPN_PASS=LnhE2WbKJl
+      - VPN_ADDRESS=1.1.1.1
+  payload:
+    image: ubuntu:22.04
+    tty: true
+    network_mode: "service:sidecar"  # <-- the magic
